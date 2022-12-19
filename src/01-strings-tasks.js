@@ -203,8 +203,11 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const firstStr = `┌${'─'.repeat(width - 2)}┐\n`;
+  const midStrs = `│${' '.repeat(width - 2)}│\n`.repeat(height - 2);
+  const lastStr = `└${'─'.repeat(width - 2)}┘\n`;
+  return firstStr + midStrs + lastStr;
 }
 
 
@@ -224,8 +227,19 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const repArr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+  const keyArr = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'.split('');
+  const result = str.replace(/[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]/g, (match) => {
+    let y = '';
+    repArr.forEach((el, i) => {
+      if (match === el) {
+        y = keyArr[i];
+      }
+    });
+    return y;
+  });
+  return result;
 }
 
 /**
@@ -242,7 +256,7 @@ function encodeToRot13(/* str */) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return typeof value === 'string';
+  return (typeof value === 'string' || value instanceof String);
 }
 
 
@@ -270,8 +284,15 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cardArr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦', 'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  let result = 0;
+  cardArr.forEach((el, i) => {
+    if (value === el) {
+      result = i;
+    }
+  });
+  return result;
 }
 
 
